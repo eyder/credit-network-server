@@ -1,0 +1,15 @@
+.user-picture-td {
+    width: 1%;
+}
+.user-info {
+  display: flex;
+  align-items: center;
+}
+.user-info .user-picture {
+  margin-right: 10px;
+}
+.user-picture {
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+}

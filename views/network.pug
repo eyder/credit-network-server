@@ -1,0 +1,25 @@
+extends layout
+
+block content
+
+  include includes/network-header.pug
+
+  case users.length
+    when 0
+      p You haven't created any users yet.
+    default
+      table.u-full-width
+        thead
+          tr
+            th User
+            th Balance
+        tbody
+          each user in users
+            tr
+              td.user-info
+                img.user-picture(src=user.picture alt=user.name)
+                a(href='./networks/' + network.id + '/users/' + user.id)= user.name
+              td= user.balance
+
+  form(method='POST' action='./networks/' + network.id + '/users')
+    button(type='submit') CREATE USER

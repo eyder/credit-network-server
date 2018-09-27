@@ -1,0 +1,29 @@
+extends layout
+
+block content
+
+  include includes/user-header.pug
+
+  case user.connections.length
+    when 0
+      p You are not connected yet. Create credit connections with people you trust to join the network.
+    default
+      h4 Credit connections
+      table.u-full-width
+        thead
+          tr
+            th Friend            
+            th Balance
+            th
+        tbody
+          each connection in user.connections
+            tr
+              td: a(href='./networks/' + network.id + '/user/' + connection.friend.id)= connection.friend.name
+              td= connection.debt
+              td
+                if connection.debt > 0
+                  p you owe #{connection.friend.name}
+                else if connection.debt < 0
+                  p #{connection.friend.name} owes you
+
+  p: a.button(href='./networks/' + network.id + '/user/' + user.id + '/connections/new') CREATE CONNECTION
