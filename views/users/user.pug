@@ -1,8 +1,10 @@
-extends layout
+extends ../layout
+
+include ../mixins/user.pug
 
 block content
 
-  include includes/user-header.pug
+  include user-header.pug
 
   case user.connections.length
     when 0
@@ -18,7 +20,7 @@ block content
         tbody
           each connection in user.connections
             tr
-              td: a(href='./networks/' + network.id + '/user/' + connection.friend.id)= connection.friend.name
+              td: +user(connection.friend)(href='./networks/' + network.id + '/users/' + connection.friend.id)
               td= connection.debt
               td
                 if connection.debt > 0
@@ -26,4 +28,4 @@ block content
                 else if connection.debt < 0
                   p #{connection.friend.name} owes you
 
-  p: a.button(href='./networks/' + network.id + '/user/' + user.id + '/connections/new') CREATE CONNECTION
+  p: a.button(href='./networks/' + network.id + '/users/' + user.id + '/connection-requests/find-person') CREATE CONNECTION

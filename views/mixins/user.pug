@@ -1,0 +1,7 @@
+mixin user(user)
+  .user
+    img.user-picture(src=user.picture alt=user.name)
+    if attributes.href
+      a(href=attributes.href)= user.name
+    else
+      span= user.name 

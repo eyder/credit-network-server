@@ -1,0 +1,20 @@
+extends ../layout
+
+include ../mixins/user.pug
+
+block content
+
+  include ../users/user-header.pug
+
+  h5 Select someone you trust to start a credit connection
+
+  case others.length
+    when 0
+      p There is no one else in the network that is not already connected to you...
+    default
+      table.u-full-width
+        tbody
+          each other in others
+            tr
+              td: +user(other)(href='./networks/' + network.id + '/users/' + user.id + '/connection-requests/to/' + other.id + '/define-limit')
+              
