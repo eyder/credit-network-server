@@ -1,13 +1,12 @@
-.user-picture-td {
-    width: 1%;
-}
-.user-info {
+.user {
   display: flex;
   align-items: center;
 }
-.user-info .user-picture {
+
+.user .user-picture {
   margin-right: 10px;
 }
+
 .user-picture {
     height: 48px;
     width: 48px;
