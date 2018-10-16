@@ -1,0 +1,7 @@
+mixin debt(connection)
+  .debt
+    if connection.debt > 0
+      p you owe #{connection.to.name}
+    else if connection.debt < 0
+      p #{connection.to.name} owes you
+    .credit #{connection.debt}

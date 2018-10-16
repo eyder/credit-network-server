@@ -1,0 +1,36 @@
+extends ../user
+
+include ../../mixins/user.pug
+include ../../mixins/limit-from.pug
+include ../../mixins/limit-to.pug
+include ../../mixins/debt.pug
+
+block user-content
+
+  if receivedReqs.length + sentReqs.length > 0
+    table.u-full-width
+      thead
+        tr
+          th Requests waiting 
+          th.limit Credit Limit 
+          th.debt 
+      tbody
+
+        each receivedReq in receivedReqs
+          tr
+            td: +user(receivedReq.from)(href='./networks/' + network.id + '/users/' + receivedReq.from.id)
+            td: +limit-from(receivedReq)
+            td: .buttons
+              button.button-primary() ACCEPT
+              button() DECLINE
+
+        each sentReq in sentReqs
+          tr
+            td: +user(sentReq.to)(href='./networks/' + network.id + '/users/' + sentReq.to.id)
+            td: +limit-to(sentReq)
+            td: .buttons 
+              button() CANCEL
+
+  else
+    p You don't have any connection requests waiting.
+

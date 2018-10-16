@@ -1,16 +1,15 @@
-extends ../layout
+extends ../user
 
-include ../mixins/user.pug
+include ../../mixins/user.pug
 
-block content
-
-  include ../users/user-header.pug
+block user-content
 
   h5 Select someone you trust to start a credit connection
 
   case others.length
     when 0
       p There is no one else in the network that is not already connected to you...
+      
     default
       table.u-full-width
         tbody

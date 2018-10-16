@@ -1,0 +1,26 @@
+extends ../user
+
+include ../../mixins/user.pug
+include ../../mixins/limit.pug
+include ../../mixins/debt.pug
+
+block user-content
+
+  if connections.length > 0
+    table.u-full-width
+      thead
+        tr
+          th Connections  
+          th.limit Credit Limit 
+          th.debt 
+      tbody
+        each connection in connections
+          tr
+            td: +user(connection.to)(href='./networks/' + network.id + '/users/' + connection.to.id)
+            td: +limit(connection.limit)
+            td: +debt(connection)
+
+  else
+    p You are not connected yet. Create credit connections with people you trust to join the network.
+
+  p: a.button(href='./networks/' + network.id + '/users/' + user.id + '/connection-requests/find-person') CREATE CONNECTION

@@ -1,14 +1,38 @@
+form .user {
+  margin-bottom: 1.5rem;
+}
+
 .user {
   display: flex;
   align-items: center;
 }
 
 .user .user-picture {
-  margin-right: 10px;
+  margin-right: 1rem;
 }
 
 .user-picture {
-    height: 48px;
-    width: 48px;
-    border-radius: 50%;
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
+}
+
+.limit {
+  text-align: center;
+}
+
+.debt {
+  text-align: center;
+}
+
+.credit {
+  font-size: 2.4rem;
+  font-weight: bold;
+}
+
+.buttons {
+  text-align: center;  
+}
+.buttons button {
+  margin-right: 1rem;
 }

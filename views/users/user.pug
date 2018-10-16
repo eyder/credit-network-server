@@ -4,28 +4,8 @@ include ../mixins/user.pug
 
 block content
 
-  include user-header.pug
+  h6= network.name
+  h3: +user(user)
 
-  case user.connections.length
-    when 0
-      p You are not connected yet. Create credit connections with people you trust to join the network.
-    default
-      h4 Credit connections
-      table.u-full-width
-        thead
-          tr
-            th Friend            
-            th Balance
-            th
-        tbody
-          each connection in user.connections
-            tr
-              td: +user(connection.friend)(href='./networks/' + network.id + '/users/' + connection.friend.id)
-              td= connection.debt
-              td
-                if connection.debt > 0
-                  p you owe #{connection.friend.name}
-                else if connection.debt < 0
-                  p #{connection.friend.name} owes you
+  block user-content
 
-  p: a.button(href='./networks/' + network.id + '/users/' + user.id + '/connection-requests/find-person') CREATE CONNECTION
