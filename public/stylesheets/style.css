@@ -1,3 +1,47 @@
+:root {
+  --color-green: #20BF55;
+  --color-dark-blue: #356D85;
+  --color-blue: #01BAEF;
+  --color-white: #FDFDFF;
+  --color-gray: #C7D7DD;
+  background: var(--color-gray);
+}
+
+body {
+  background: var(--color-white);
+  height: 100vh;
+}
+
+body > header {
+  background: var(--color-blue);
+  color: var(--color-white);
+}
+
+body > header > div {
+  padding: 2rem;
+  padding-top: 1.5rem;
+  padding-bottom: 0rem;
+}
+
+body > header > nav {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0.5rem;
+  background: var(--color-dark-blue);
+}
+
+body > header > nav a {
+  color: var(--color-white);
+}
+body > header > nav a:hover {
+  color: var(--color-blue);
+}
+
+body > main {
+  padding: 1rem;
+  padding-top: 2rem;
+}
+
 form .user {
   margin-bottom: 1.5rem;
 }
@@ -15,13 +59,6 @@ form .user {
   height: 48px;
   width: 48px;
   border-radius: 50%;
-}
-
-.menu {
-  display: flex;
-  justify-content: space-evenly;
-  padding: 0.5rem;
-  margin-bottom: 2rem;
 }
 
 .limit {

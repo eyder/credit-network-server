@@ -4,12 +4,15 @@ include ../mixins/user.pug
 
 block content
 
-  h6= network.name
-  h3: +user(user)
+  header
+    div
+      h6= network.name
+      h3: +user(user)
 
-  nav.menu
-    a(href='./networks/' + network.id + '/users/' + user.id + '/connections') Connections
-    a(href='./networks/' + network.id + '/users/' + user.id + '/connection-requests') Requests
-
-  block user-content
+    nav
+      a(href='./networks/' + network.id + '/users/' + user.id + '/connections') Connections
+      a(href='./networks/' + network.id + '/users/' + user.id + '/connection-requests') Requests
+      
+  main
+    block user-content
 
