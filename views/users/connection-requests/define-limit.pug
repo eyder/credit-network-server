@@ -6,7 +6,7 @@ block user-content
 
   h5 Define a credit limit between you and #{other.name}
 
-  form(method='POST' action='./networks/' + network.id + '/users/' + user.id + '/connection-requests/to/' + other.id)
+  form(method='POST' action='./users/' + user.id + '/connection-requests/to/' + other.id)
     
     +user(other)
 

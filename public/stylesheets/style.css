@@ -38,8 +38,7 @@ body > header > nav a:hover {
 }
 
 body > main {
-  padding: 1rem;
-  padding-top: 2rem;
+  padding: 2rem;
 }
 
 form .user {

@@ -18,7 +18,7 @@ block user-content
 
         each receivedReq in receivedReqs
           tr
-            td: +user(receivedReq.from)(href='./networks/' + network.id + '/users/' + receivedReq.from.id)
+            td: +user(receivedReq.from)(href='./users/' + receivedReq.from.id)
             td: +limit-from(receivedReq)
             td: .buttons
               button.button-primary() ACCEPT
@@ -26,7 +26,7 @@ block user-content
 
         each sentReq in sentReqs
           tr
-            td: +user(sentReq.to)(href='./networks/' + network.id + '/users/' + sentReq.to.id)
+            td: +user(sentReq.to)(href='./users/' + sentReq.to.id)
             td: +limit-to(sentReq)
             td: .buttons 
               button() CANCEL

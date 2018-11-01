@@ -16,11 +16,11 @@ block user-content
       tbody
         each connection in connections
           tr
-            td: +user(connection.to)(href='./networks/' + network.id + '/users/' + connection.to.id)
+            td: +user(connection.to)(href='./users/' + connection.to.id)
             td: +limit(connection.limit)
             td: +debt(connection)
 
   else
     p You are not connected yet. Create credit connections with people you trust to join the network.
 
-  p: a.button(href='./networks/' + network.id + '/users/' + user.id + '/connection-requests/find-person') CREATE CONNECTION
+  p: a.button(href='./users/' + user.id + '/connection-requests/find-person') CREATE CONNECTION

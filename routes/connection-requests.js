@@ -2,62 +2,55 @@ var express = require('express');
 
 var router = express.Router();
 
-var users = require('../repositories/users');
-var connections = require('../repositories/connections');
-var connectionRequests = require('../repositories/connection-requests');
+var graph = require('../db/credit-network-graph');
 
 /* GET */
 router.get('/', function(req, res, next) {
-  const sentReqs = connectionRequests.filter(request => request.from.id == req.user.id);
-  const receivedReqs = connectionRequests.filter(request => request.to.id == req.user.id);
-  res.render('users/connection-requests/connection-requests-index', { 
-    network: req.network, 
-    user: req.user,
-    sentReqs: sentReqs,
-    receivedReqs: receivedReqs
-  });
+  graph.getReceivedConnectionRequests(req.user.id)
+  .then(receivedReqs => req.receivedReqs = receivedReqs)
+  .then(() => graph.getSentConnectionRequests(req.user.id))
+  .then(sentReqs => {
+    res.render('users/connection-requests/connection-requests-index', {
+      user: req.user,
+      sentReqs: sentReqs,
+      receivedReqs: req.receivedReqs
+    });
+  })
+  .catch(next);
 });
 
 /* GET find-person */
 router.get('/find-person', function(req, res, next) {
-  const alreadyConnectedIds = connections
-    .filter(connection => connection.from.id === req.user.id)
-    .map(connection => connection.to.id);
-  const requestsSentIds = connectionRequests
-    .filter(request => request.from.id === req.user.id)
-    .map(request => request.to.id);
-  const requestsReceivedIds = connectionRequests
-    .filter(connection => connection.to.id === req.user.id)
-    .map(connection => connection.from.id);
-  const networkUsers = users
-    .filter(user => user.networkId === req.network.id);
-  const others = networkUsers
-    .filter(user => user.id !== req.user.id)
-    .filter(user => !alreadyConnectedIds.includes(user.id))
-    .filter(user => !requestsSentIds.includes(user.id))
-    .filter(user => !requestsReceivedIds.includes(user.id));
-  res.render('users/connection-requests/find-person', { 
-    network: req.network, 
-    user: req.user,
-    others: others
-  });
+  graph.listUsersNotRelatedTo(req.user.id)
+  .then(others => {
+    res.render('users/connection-requests/find-person', {
+      user: req.user,
+      others: others
+    });
+  })
+  .catch(next);
 });
 
 /* GET define-limit */
 router.get('/to/:otherId/define-limit', function(req, res, next) {
-  const other = users.find(user => user.networkId == req.network.id && user.id == req.params.otherId);  
-  res.render('users/connection-requests/define-limit', { 
-    network: req.network, 
-    user: req.user,
-    other: other
-  });
+  graph.getUser(req.params.otherId)
+  .then(other =>
+    res.render('users/connection-requests/define-limit', {
+      user: req.user,
+      other: other
+    })
+  )
+  .catch(next);
 });
 
 /* POST */
 router.post('/to/:otherId', function(req, res, next) {
-  const other = users.find(user => user.networkId == req.network.id && user.id == req.params.otherId);
-  connectionRequests.push({from: req.user, to: other, limit: req.body.limit});
-  res.redirect('/networks/' + req.network.id + '/users/' + req.user.id);
+  graph.getUser(req.params.otherId)
+  .then(other => graph.createConnectionRequest(req.user.id, other.id, req.body.limit))
+  .then(request => {
+    res.redirect('/users/' + req.user.id);
+  })
+  .catch(next);
 });
 
 module.exports = router;

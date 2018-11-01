@@ -1,0 +1,32 @@
+extends ../layout
+
+include ../mixins/user.pug
+
+block content
+
+  header
+    div
+      h3 Credit Network
+
+    nav
+      a(href='./network/users') Users
+      a(href='./network/graph') Graph
+      
+  main
+    case users.length
+      when 0
+        p You haven't created any users yet.
+      default
+        table.u-full-width
+          thead
+            tr
+              th User
+              th Balance
+          tbody
+            each user in users
+              tr
+                td: +user(user)(href='./users/' + user.id)
+                td= user.balance
+
+    form(method='POST' action='./network/users')
+      button(type='submit') CREATE USER

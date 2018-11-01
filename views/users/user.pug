@@ -6,12 +6,12 @@ block content
 
   header
     div
-      h6= network.name
+      h6 Credit Network
       h3: +user(user)
 
     nav
-      a(href='./networks/' + network.id + '/users/' + user.id + '/connections') Connections
-      a(href='./networks/' + network.id + '/users/' + user.id + '/connection-requests') Requests
+      a(href='./users/' + user.id + '/connections') Connections
+      a(href='./users/' + user.id + '/connection-requests') Requests
       
   main
     block user-content
