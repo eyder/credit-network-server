@@ -1,19 +1,19 @@
-var express = require('express');
+const express = require('express');
 
-var router = express.Router();
+const router = express.Router();
 
-var graph = require('../db/credit-network-graph');
+const graph = require('../db/credit-network-graph');
 
 /* GET */
-router.get('/', function(req, res, next) {
+router.get('/', (req, res, next) => {
   graph.getUserConnections(req.user.id)
-  .then(connections => {
-    res.render('users/connections/connections-index', {
-      user: req.user,
-      connections: connections
-    });
-  })
-  .catch(next);
+    .then((connections) => {
+      res.render('users/connections/connections-index', {
+        user: req.user,
+        connections,
+      });
+    })
+    .catch(next);
 });
 
 module.exports = router;

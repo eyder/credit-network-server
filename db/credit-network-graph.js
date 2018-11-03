@@ -2,13 +2,12 @@
 const neo4j = require('neo4j-driver').v1;
 
 const url = process.env.GRAPHENEDB_BOLT_URL;
-const user = process.env.GRAPHENEDB_BOLT_USER;
-const pass = process.env.GRAPHENEDB_BOLT_PASSWORD;
+const username = process.env.GRAPHENEDB_BOLT_USER;
+const password = process.env.GRAPHENEDB_BOLT_PASSWORD;
 
 class CreditNetworkGraph {
-
   constructor() {
-    this.driver = neo4j.driver(url, neo4j.auth.basic(user, pass));
+    this.driver = neo4j.driver(url, neo4j.auth.basic(username, password));
   }
 
   createUser(user) {
@@ -17,8 +16,7 @@ class CreditNetworkGraph {
       .run(`
         CREATE (user:User {id: {id}, name: {name}, email: {email}, picture: {picture}})
         RETURN user
-      `, user
-      )
+      `, user)
       .then((result) => {
         session.close();
         return result.records[0].get('user').properties;
@@ -35,8 +33,7 @@ class CreditNetworkGraph {
       .run(`
         MATCH (user:User {id: $userId})
         RETURN user
-      `, {userId}
-      )
+      `, { userId })
       .then((result) => {
         session.close();
         return result.records[0].get('user').properties;
@@ -72,13 +69,10 @@ class CreditNetworkGraph {
         MATCH (other:User)
         WHERE NOT other.id = $userId AND NOT (user)--(other)
         RETURN other
-        `, {userId}
-      )
+        `, { userId })
       .then((result) => {
         session.close();
-        return result.records.map(record => {
-          console.log(record);
-          return record.get('other').properties});
+        return result.records.map(record => record.get('other').properties);
       })
       .catch((error) => {
         session.close();
@@ -94,8 +88,7 @@ class CreditNetworkGraph {
         MATCH (to:User {id: $toUserId})
         CREATE (from)-[request:CONNECTION_REQUEST {limit: $limit}]->(to)
         RETURN request
-      `, {fromUserId, toUserId, limit}
-      )
+      `, { fromUserId, toUserId, limit })
       .then((result) => {
         session.close();
         return result.records[0].get('request').properties;
@@ -112,16 +105,13 @@ class CreditNetworkGraph {
       .run(`
         MATCH (user:User {id: $userId})<-[request:CONNECTION_REQUEST]-(other:User)
         RETURN request.limit AS limit, other AS from
-        `, {userId}
-      )
+        `, { userId })
       .then((result) => {
         session.close();
-        return result.records.map(record => {
-          return {
-            limit: record.get('limit'),
-            from: record.get('from').properties
-          };
-        });
+        return result.records.map(record => ({
+          limit: record.get('limit'),
+          from: record.get('from').properties,
+        }));
       })
       .catch((error) => {
         session.close();
@@ -135,16 +125,13 @@ class CreditNetworkGraph {
       .run(`
         MATCH (user:User {id: $userId})-[request:CONNECTION_REQUEST]->(other:User)
         RETURN request.limit AS limit, other AS to
-        `, {userId}
-      )
+        `, { userId })
       .then((result) => {
         session.close();
-        return result.records.map(record => {
-          return {
-            limit: record.get('limit'),
-            to: record.get('to').properties
-          };
-        });
+        return result.records.map(record => ({
+          limit: record.get('limit'),
+          to: record.get('to').properties,
+        }));
       })
       .catch((error) => {
         session.close();
@@ -159,8 +146,7 @@ class CreditNetworkGraph {
         MATCH (user:User {id: $userId})-[connection:CONNECTION]->(other:User)
         RETURN
           {limit: connection.limit, debt:connection.debt, to:other} AS connections
-        `, {userId}
-      )
+        `, { userId })
       .then((result) => {
         session.close();
         return result.records.map(record => record.get('connections').properties);
@@ -170,7 +156,6 @@ class CreditNetworkGraph {
         throw error;
       });
   }
-
 }
 
 module.exports = new CreditNetworkGraph();
