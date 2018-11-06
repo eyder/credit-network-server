@@ -6,8 +6,8 @@ block content
 
   header
     div
-      h6 Credit Network
-      h3: +user(user)
+      h3.credit-network Credit Network
+      img.user-picture(src=user.picture alt=user.name)
 
     nav
       a(href='./users/' + user.id + '/connections') Connections

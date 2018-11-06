@@ -1,40 +1,42 @@
 :root {
-  --color-green: #20BF55;
-  --color-dark-blue: #356D85;
-  --color-blue: #01BAEF;
-  --color-white: #FDFDFF;
-  --color-gray: #C7D7DD;
-  background: var(--color-gray);
+  background: #fcfcfc;
 }
 
 body {
-  background: var(--color-white);
   height: 100vh;
+  font-family: 'Open Sans', sans-serif;
+  color: #333;
 }
 
-body > header {
-  background: var(--color-blue);
-  color: var(--color-white);
+a {
+  text-decoration: none;
+}
+
+td, th {
+  border-bottom: none;
+}
+
+button {
+  font-family: 'Open Sans', sans-serif; 
 }
 
 body > header > div {
   padding: 2rem;
-  padding-top: 1.5rem;
-  padding-bottom: 0rem;
+  display: flex;
+  justify-content: space-between;
+}
+body > header > div > h3 {
+  margin-bottom: 0px;
+}
+
+.credit-network {
+  font-family: 'Pacifico', cursive;
 }
 
 body > header > nav {
   display: flex;
   justify-content: space-evenly;
-  padding: 0.5rem;
-  background: var(--color-dark-blue);
-}
-
-body > header > nav a {
-  color: var(--color-white);
-}
-body > header > nav a:hover {
-  color: var(--color-blue);
+  padding: 1rem;
 }
 
 body > main {
@@ -69,13 +71,14 @@ form .user {
 }
 
 .credit-number {
-  font-size: 2.4rem;
-  font-weight: bold;
+  font-family: 'Pacifico', cursive;
+  font-size: 3rem;
 }
 
 .buttons {
   text-align: center;  
 }
+
 .buttons button {
   margin-right: 1rem;
 }
