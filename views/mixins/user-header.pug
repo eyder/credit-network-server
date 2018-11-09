@@ -1,0 +1,4 @@
+mixin user-header(user)
+  .user-header
+    a(href='./users/' + user.id + '/connections'): h3.credit-network Credit Network
+    img.user-picture(src=user.picture alt=user.name)

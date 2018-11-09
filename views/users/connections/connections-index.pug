@@ -1,26 +1,36 @@
-extends ../user
+extends ../../layout
 
+include ../../mixins/user-header.pug
 include ../../mixins/user.pug
 include ../../mixins/limit.pug
 include ../../mixins/debt.pug
 
-block user-content
+block content
 
-  if connections.length > 0
-    table.u-full-width
-      thead
-        tr
-          th Connections  
-          th.limit Credit Limit 
-          th.debt 
-      tbody
-        each connection in connections
+  header
+    +user-header(user)
+    nav
+      a(href='./users/' + user.id + '/connections').active Connections
+      a(href='./users/' + user.id + '/connection-requests') Requests
+  
+  main
+    if connections.length > 0
+      table.u-full-width
+        thead
           tr
-            td: +user(connection.to)(href='./users/' + connection.to.id)
-            td: +limit(connection.limit)
-            td: +debt(connection)
+            th Connections  
+            th.limit Credit Limit 
+            th.debt 
+        tbody
+          each connection in connections
+            tr
+              td: +user(connection.to)(href='./users/' + connection.to.id)
+              td: +limit(connection.limit)
+              td: +debt(connection)
+      p: a.button(href='./users/' + user.id + '/connection-requests/find-person') CREATE CONNECTION
 
-  else
-    p You are not connected yet. Create credit connections with people you trust to join the network.
+    else
+      .no-content-message
+        p You are not connected yet. Create credit connections with people you trust to join the network.
+        a.button(href='./users/' + user.id + '/connection-requests/find-person') FIND FRIENDS
 
-  p: a.button(href='./users/' + user.id + '/connection-requests/find-person') CREATE CONNECTION

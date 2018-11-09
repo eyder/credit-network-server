@@ -1,16 +1,21 @@
-extends ../user
+extends ../../layout
 
+include ../../mixins/user-header.pug
 include ../../mixins/user.pug
 
-block user-content
+block content
 
-  h5 Define a credit limit between you and #{other.name}
+  header
+    +user-header(user)
+  
+  main
+    h5 Define a credit limit between you and #{other.name}
 
-  form(method='POST' action='./users/' + user.id + '/connection-requests/to/' + other.id)
-    
-    +user(other)
+    form(method='POST' action='./users/' + user.id + '/connection-requests/to/' + other.id)
+      
+      +user(other)
 
-    label(for='limit') Credit limit
-    .u-full-width: input(type='number' min='0' name='limit' id='limit')
+      label(for='limit') Credit limit
+      .u-full-width: input(type='number' min='0' name='limit' id='limit')
 
-    button(type='submit') SEND REQUEST
+      button(type='submit') SEND REQUEST

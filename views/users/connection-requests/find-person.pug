@@ -1,19 +1,24 @@
-extends ../user
+extends ../../layout
 
+include ../../mixins/user-header.pug
 include ../../mixins/user.pug
 
-block user-content
+block content
 
-  h5 Select someone you trust to start a credit connection
+  header
+    +user-header(user)
+  
+  main
+    h5 Select someone you trust to start a credit connection
 
-  case others.length
-    when 0
-      p There is no one else in the network that is not already connected to you...
-      
-    default
-      table.u-full-width
-        tbody
-          each other in others
-            tr
-              td: +user(other)(href='./users/' + user.id + '/connection-requests/to/' + other.id + '/define-limit')
+    case others.length
+      when 0
+        p There is no one else in the network that is not already connected to you...
+        
+      default
+        table.u-full-width
+          tbody
+            each other in others
+              tr
+                td: +user(other)(href='./users/' + user.id + '/connection-requests/to/' + other.id + '/define-limit')
               

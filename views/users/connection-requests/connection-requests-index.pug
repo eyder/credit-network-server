@@ -1,36 +1,44 @@
-extends ../user
+extends ../../layout
 
+include ../../mixins/user-header.pug
 include ../../mixins/user.pug
 include ../../mixins/limit-from.pug
 include ../../mixins/limit-to.pug
 include ../../mixins/debt.pug
 
-block user-content
+block content
 
-  if receivedReqs.length + sentReqs.length > 0
-    table.u-full-width
-      thead
-        tr
-          th Requests waiting 
-          th.limit Credit Limit 
-          th.debt 
-      tbody
+  header
+    +user-header(user)
+    nav
+      a(href='./users/' + user.id + '/connections') Connections
+      a(href='./users/' + user.id + '/connection-requests').active Requests
 
-        each receivedReq in receivedReqs
+  main
+    if receivedReqs.length + sentReqs.length > 0
+      table.u-full-width
+        thead
           tr
-            td: +user(receivedReq.from)(href='./users/' + receivedReq.from.id)
-            td: +limit-from(receivedReq)
-            td: .buttons
-              button.button-primary() ACCEPT
-              button() DECLINE
+            th Requests waiting 
+            th.limit Credit Limit 
+            th.debt 
+        tbody
 
-        each sentReq in sentReqs
-          tr
-            td: +user(sentReq.to)(href='./users/' + sentReq.to.id)
-            td: +limit-to(sentReq)
-            td: .buttons 
-              button() CANCEL
+          each receivedReq in receivedReqs
+            tr
+              td: +user(receivedReq.from)(href='./users/' + receivedReq.from.id)
+              td: +limit-from(receivedReq)
+              td: .buttons
+                button.button-primary() ACCEPT
+                button() DECLINE
 
-  else
-    p You don't have any connection requests waiting.
+          each sentReq in sentReqs
+            tr
+              td: +user(sentReq.to)(href='./users/' + sentReq.to.id)
+              td: +limit-to(sentReq)
+              td: .buttons 
+                button() CANCEL
+
+    else
+      p You don't have any connection requests waiting.
 
