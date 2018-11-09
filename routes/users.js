@@ -1,10 +1,10 @@
 const express = require('express');
-
-const router = express.Router();
+const asyncMiddleware = require('../utils/async-middleware');
 const connectionRequestsRouter = require('./connection-requests');
 const connectionsRouter = require('./connections');
-
 const graph = require('../db/credit-network-graph');
+
+const router = express.Router();
 
 /* GET user */
 router.get('/:userId', (req, res) => {
@@ -12,23 +12,17 @@ router.get('/:userId', (req, res) => {
 });
 
 /* NESTED ROUTES /users/:id/connection-requests */
-router.use('/:userId/connection-requests', (req, res, next) => {
-  graph.getUser(req.params.userId)
-    .then((user) => {
-      req.user = user;
-      next();
-    })
-    .catch(next);
-}, connectionRequestsRouter);
+router.use('/:userId/connection-requests', asyncMiddleware(async (req, res, next) => {
+  const user = await graph.getUser(req.params.userId);
+  req.user = user;
+  next();
+}), connectionRequestsRouter);
 
 /* NESTED ROUTES /users/:id/connections */
-router.use('/:userId/connections', (req, res, next) => {
-  graph.getUser(req.params.userId)
-    .then((user) => {
-      req.user = user;
-      next();
-    })
-    .catch(next);
-}, connectionsRouter);
+router.use('/:userId/connections', asyncMiddleware(async (req, res, next) => {
+  const user = await graph.getUser(req.params.userId);
+  req.user = user;
+  next();
+}), connectionsRouter);
 
 module.exports = router;

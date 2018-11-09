@@ -1,24 +1,21 @@
 const express = require('express');
+const asyncMiddleware = require('../utils/async-middleware');
+const graph = require('../db/credit-network-graph');
+const generateRandomUser = require('../services/generate-random-user');
 
 const router = express.Router();
 
-const graph = require('../db/credit-network-graph');
-
-const generateRandomUser = require('../services/generate-random-user');
-
 /* GET /network/users */
-router.get('/users', (req, res, next) => {
-  graph.listUsers()
-    .then(users => res.render('network/users', { users }))
-    .catch(next);
-});
+router.get('/users', asyncMiddleware(async (req, res) => {
+  const users = await graph.listUsers();
+  res.render('network/users', { users });
+}));
 
 /* POST user */
-router.post('/users', (req, res, next) => {
-  generateRandomUser()
-    .then(user => graph.createUser(user))
-    .then(() => res.redirect('/network/users'))
-    .catch(next);
-});
+router.post('/users', asyncMiddleware(async (req, res) => {
+  const user = await generateRandomUser();
+  await graph.createUser(user);
+  res.redirect('/network/users');
+}));
 
 module.exports = router;
