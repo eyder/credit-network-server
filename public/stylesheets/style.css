@@ -21,6 +21,10 @@ button {
   font-family: 'Open Sans', sans-serif; 
 }
 
+.header {
+  padding: 2rem;
+}
+
 .user-header {
   padding: 2rem;
   display: flex;
