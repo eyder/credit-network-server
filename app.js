@@ -5,12 +5,15 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const moment = require('moment');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const networkRouter = require('./routes/network');
 
 const app = express();
+
+app.locals.moment = moment;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -28,16 +28,19 @@ block content
             tr
               td: +user(receivedReq.from)(href='./users/' + receivedReq.from.id)
               td: +limit-from(receivedReq)
-              td: .buttons
+              td.actions
                 button.button-primary() ACCEPT
                 button() DECLINE
+                .info Received #{moment(receivedReq.date).fromNow()}
+                
 
           each sentReq in sentReqs
             tr
               td: +user(sentReq.to)(href='./users/' + sentReq.to.id)
               td: +limit-to(sentReq)
-              td: .buttons 
+              td.actions 
                 button() CANCEL
+                .info Sent #{moment(sentReq.date).fromNow()}
 
     else
       p You don't have any connection requests waiting.
