@@ -25,12 +25,12 @@ button {
   }
 }
 
-.header {
+header {
   padding: 2rem;
+  padding-bottom: 0rem;
 }
 
 .user-header {
-  padding: 2rem;
   display: flex;
   justify-content: space-between;
 }
@@ -38,7 +38,6 @@ button {
 .credit-network {
   font-family: 'Pacifico', cursive;
   color: var(--text-color);
-  margin-bottom: 0rem;
 }
 
 body > header > nav {
