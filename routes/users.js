@@ -2,7 +2,7 @@ const express = require('express');
 const asyncMiddleware = require('../utils/async-middleware');
 const connectionRequestsRouter = require('./connection-requests');
 const connectionsRouter = require('./connections');
-const repository = require('../repositories/users-repository');
+const users = require('../repositories/users-repository');
 
 const router = express.Router();
 
@@ -13,14 +13,14 @@ router.get('/:userId', (req, res) => {
 
 /* NESTED ROUTES /users/:id/connection-requests */
 router.use('/:userId/connection-requests', asyncMiddleware(async (req, res, next) => {
-  const user = await repository.findById(req.params.userId);
+  const user = await users.findById(req.params.userId);
   req.user = user;
   next();
 }), connectionRequestsRouter);
 
 /* NESTED ROUTES /users/:id/connections */
 router.use('/:userId/connections', asyncMiddleware(async (req, res, next) => {
-  const user = await repository.findById(req.params.userId);
+  const user = await users.findById(req.params.userId);
   req.user = user;
   next();
 }), connectionsRouter);
