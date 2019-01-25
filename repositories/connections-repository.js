@@ -1,23 +1,22 @@
-const graphDriver = require('../db/credit-network-graph-driver');
+const graph = require('../db/graph');
 
 class ConnectionsRepository {
   constructor() {
-    this.graphDriver = graphDriver;
+    this.graph = graph;
   }
 
   async findByUserId(userId) {
-    const session = this.graphDriver.session();
-    try {
-      const result = await session
-        .run(`
-          MATCH (user:User {id: $userId})-[connection:CONNECTION]->(other:User)
-          RETURN
-            {limit: connection.limit, debt:connection.debt, to:other} AS connections
-        `, { userId });
-      return result.records.map(record => record.get('connections').properties);
-    } finally {
-      session.close();
-    }
+    return this.graph.runInSession(
+      async (session) => {
+        const result = await session
+          .run(`
+            MATCH (user:User {id: $userId})-[connection:CONNECTION]->(other:User)
+            RETURN
+              {limit: connection.limit, debt:connection.debt, to:other} AS connections
+          `, { userId });
+        return result.records.map(record => record.get('connections').properties);
+      },
+    );
   }
 }
 
