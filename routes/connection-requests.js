@@ -1,7 +1,7 @@
 const express = require('express');
 const asyncMiddleware = require('../utils/async-middleware');
-const connectionRequests = require('../repositories/connection-requests-repository');
-const users = require('../repositories/users-repository');
+const connectionRequests = require('../repositories/connection-requests');
+const users = require('../repositories/users');
 
 const router = express.Router();
 
@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/', asyncMiddleware(async (req, res) => {
   const receivedReqs = await connectionRequests.findReceivedByUserId(req.user.id);
   const sentReqs = await connectionRequests.findSentByUserId(req.user.id);
-  res.render('users/connection-requests/connection-requests-index', {
+  res.render('users/connection-requests/index', {
     user: req.user,
     receivedReqs,
     sentReqs,
@@ -25,10 +25,10 @@ router.get('/find-person', asyncMiddleware(async (req, res) => {
   });
 }));
 
-/* GET define-limit */
-router.get('/to/:otherId/define-limit', asyncMiddleware(async (req, res) => {
+/* GET confirm */
+router.get('/to/:otherId/confirm', asyncMiddleware(async (req, res) => {
   const other = await users.findById(req.params.otherId);
-  res.render('users/connection-requests/define-limit', {
+  res.render('users/connection-requests/confirm', {
     user: req.user,
     other,
   });
@@ -37,7 +37,7 @@ router.get('/to/:otherId/define-limit', asyncMiddleware(async (req, res) => {
 /* POST */
 router.post('/to/:otherId', asyncMiddleware(async (req, res) => {
   const other = await users.findById(req.params.otherId);
-  await connectionRequests.create(req.user.id, other.id, req.body.limit);
+  await connectionRequests.create(req.user.id, other.id);
   res.redirect(`/users/${req.user.id}`);
 }));
 

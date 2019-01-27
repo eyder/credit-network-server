@@ -6,7 +6,7 @@ class ConnectionResquestsRepository {
     this.graph = graph;
   }
 
-  async create(fromUserId, toUserId, limit) {
+  async create(fromUserId, toUserId) {
     return this.graph.runInSession(
       async (session) => {
         const result = await session
@@ -14,12 +14,11 @@ class ConnectionResquestsRepository {
             MATCH (from:User {id: $fromUserId})
             MATCH (to:User {id: $toUserId})
             CREATE (from)-[request:CONNECTION_REQUEST {
-              limit: $limit, 
               date: $dateMillis
             }]->(to)
             RETURN request
           `, {
-            fromUserId, toUserId, limit, dateMillis: Date.now(),
+            fromUserId, toUserId, dateMillis: Date.now(),
           });
         return result.records[0].get('request').properties;
       },
@@ -32,10 +31,9 @@ class ConnectionResquestsRepository {
         const result = await session
           .run(`
             MATCH (user:User {id: $userId})<-[request:CONNECTION_REQUEST]-(other:User)
-            RETURN request.limit AS limit, request.date as date, other AS from
+            RETURN request.date as date, other AS from
           `, { userId });
         return result.records.map(record => ({
-          limit: record.get('limit'),
           date: new Date(record.get('date')),
           from: record.get('from').properties,
         }));
@@ -49,10 +47,9 @@ class ConnectionResquestsRepository {
         const result = await session
           .run(`
             MATCH (user:User {id: $userId})-[request:CONNECTION_REQUEST]->(other:User)
-            RETURN request.limit AS limit, request.date as date, other AS to
+            RETURN request.date as date, other AS to
           `, { userId });
         return result.records.map(record => ({
-          limit: record.get('limit'),
           date: new Date(record.get('date')),
           to: record.get('to').properties,
         }));

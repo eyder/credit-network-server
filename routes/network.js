@@ -1,6 +1,6 @@
 const express = require('express');
 const asyncMiddleware = require('../utils/async-middleware');
-const users = require('../repositories/users-repository');
+const users = require('../repositories/users');
 const generateRandomUser = require('../services/generate-random-user');
 
 const router = express.Router();

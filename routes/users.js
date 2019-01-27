@@ -2,7 +2,7 @@ const express = require('express');
 const asyncMiddleware = require('../utils/async-middleware');
 const connectionRequestsRouter = require('./connection-requests');
 const connectionsRouter = require('./connections');
-const users = require('../repositories/users-repository');
+const users = require('../repositories/users');
 
 const router = express.Router();
 

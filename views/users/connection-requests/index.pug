@@ -2,8 +2,6 @@ extends ../../layout
 
 include ../../mixins/user-header.pug
 include ../../mixins/user.pug
-include ../../mixins/limit-from.pug
-include ../../mixins/limit-to.pug
 include ../../mixins/debt.pug
 
 block content
@@ -20,14 +18,12 @@ block content
         thead
           tr
             th Requests waiting 
-            th.limit Credit Limit 
             th.debt 
         tbody
 
           each receivedReq in receivedReqs
             tr
               td: +user(receivedReq.from)(href='./users/' + receivedReq.from.id)
-              td: +limit-from(receivedReq)
               td.actions
                 button.button-primary() ACCEPT
                 button() DECLINE
@@ -37,7 +33,6 @@ block content
           each sentReq in sentReqs
             tr
               td: +user(sentReq.to)(href='./users/' + sentReq.to.id)
-              td: +limit-to(sentReq)
               td.actions 
                 button() CANCEL
                 .info Sent #{moment(sentReq.date).fromNow()}
