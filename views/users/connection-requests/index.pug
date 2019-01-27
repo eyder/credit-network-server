@@ -27,7 +27,7 @@ block content
               td.actions
                 button.button-primary() ACCEPT
                 button() DECLINE
-                .info Received #{moment(receivedReq.date).fromNow()}
+                .actions-info Received #{moment(receivedReq.date).fromNow()}
                 
 
           each sentReq in sentReqs
@@ -35,7 +35,7 @@ block content
               td: +user(sentReq.to)(href='./users/' + sentReq.to.id)
               td.actions 
                 button() CANCEL
-                .info Sent #{moment(sentReq.date).fromNow()}
+                .actions-info Sent #{moment(sentReq.date).fromNow()}
 
     else
       p You don't have any connection requests waiting.

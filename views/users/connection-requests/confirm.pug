@@ -1,0 +1,24 @@
+extends ../../layout
+
+include ../../mixins/user-header.pug
+include ../../mixins/user.pug
+
+block content
+
+  header
+    +user-header(user)
+  
+  main
+    .dialog
+
+      h4 Send connection request
+
+      .p: +user(other)
+
+      p If #{other.name} accepts your request, a credit connection will be created between you two.
+
+      form(method='POST' action='./users/' + user.id + '/connection-requests/to/' + other.id)
+
+        .actions
+          a.button(href='./users/' + user.id) CANCEL
+          button.button-primary(type='submit') SEND REQUEST

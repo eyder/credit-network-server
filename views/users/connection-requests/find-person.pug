@@ -9,7 +9,16 @@ block content
     +user-header(user)
   
   main
-    h5 Select someone you trust to start a credit connection
+    h4 Create a credit connection with a friend
+
+    .info
+      h5 A credit connection is something big!
+      p It means you both accept to owe each other up to 100 credits.
+      p 
+        | The great thing is that when your friend owes you some credit,
+        | you can use these credits to pay anyone in her network. 
+
+    p Select someone you trust to create a credit connection. 
 
     case others.length
       when 0
@@ -20,5 +29,5 @@ block content
           tbody
             each other in others
               tr
-                td: +user(other)(href='./users/' + user.id + '/connection-requests/to/' + other.id + '/define-limit')
+                td: +user(other)(href='./users/' + user.id + '/connection-requests/to/' + other.id + '/confirm')
               

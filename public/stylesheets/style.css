@@ -3,6 +3,7 @@
   --text-color-muted: #999;
   --link-color: #1EAEDB;
   --font-size-small: 1.2rem;
+  --p-margin-bottom: 2.5rem;
 }
 
 body {
@@ -19,10 +20,18 @@ button {
   font-family: 'Open Sans', sans-serif; 
 }
 
+.p {
+  margin-bottom: var(--p-margin-bottom);
+}
+
 @media (min-width: 400px) {
   .container {
     width: 100%;
   }
+}
+
+.container {
+  padding: 0;
 }
 
 .header {
@@ -74,8 +83,8 @@ form .user {
 }
 
 .user-picture {
-  height: 48px;
-  width: 48px;
+  height: 40px;
+  width: 40px;
   border-radius: 50%;
 }
 
@@ -96,22 +105,28 @@ form .user {
   text-align: center;  
 }
 
-@media (min-width: 750px) {
-  .actions button {
-    margin-right: 1rem;
-  }
+.actions button, .actions .button {
+  margin-right: 1rem;
 }
 
-.actions button:last-of-type {
+.actions button:last-child, .action .button:last-child {
   margin-right: 0rem;
 }
 
-.actions .info {
+.actions .actions-info {
   color: var(--text-color-muted);
   font-size: var(--font-size-small);
 }
 
-.no-content-message {
+.dialog {
   text-align: center;
-  padding: 2rem;
+  padding: 1rem;
+}
+
+.dialog .user {
+  justify-content: center;
+}
+
+.info {
+  padding: 1rem 1rem 0rem 1rem;
 }
