@@ -2,6 +2,7 @@
   --text-color: #333;
   --text-color-muted: #999;
   --link-color: #1EAEDB;
+  --divider-color: #E1E1E1;
   --font-size-small: 1.2rem;
   --p-margin-bottom: 2.5rem;
 }
@@ -16,30 +17,18 @@ a {
   text-decoration: none;
 }
 
-button {
+button,.button {
   font-family: 'Open Sans', sans-serif; 
+  height: 34px;
+  line-height: 32px;
 }
 
 .p {
   margin-bottom: var(--p-margin-bottom);
 }
 
-@media (min-width: 400px) {
-  .container {
-    width: 100%;
-  }
-}
-
-.container {
-  padding: 0;
-}
-
-.header {
-  padding: 2rem;
-}
-
 .user-header {
-  padding: 2rem;
+  padding: 2rem 0 2rem 0;
   display: flex;
   justify-content: space-between;
 }
@@ -53,7 +42,7 @@ button {
 body > header > nav {
   display: flex;
   justify-content: space-evenly;
-  padding: 1rem;
+  padding: 1rem 0 1rem 0;
 }
 
 body > header > nav > a {
@@ -63,10 +52,6 @@ body > header > nav > a {
 body > header > nav > a.active {
   color: var(--text-color);
   border-bottom: 3px solid var(--link-color);
-}
-
-body > main {
-  padding: 2rem;
 }
 
 form .user {
@@ -83,8 +68,8 @@ form .user {
 }
 
 .user-picture {
-  height: 40px;
-  width: 40px;
+  height: 48px;
+  width: 48px;
   border-radius: 50%;
 }
 
@@ -101,9 +86,24 @@ form .user {
   font-size: 3rem;
 }
 
-.actions {
-  text-align: center;  
+.time-ago {
+  color: var(--text-color-muted);
+  font-size: var(--font-size-small);
 }
+
+.request {
+  margin-bottom: 1rem;
+  display: flex;
+}
+
+.request .user-picture {
+  margin-right: 1rem;
+}
+
+.request p {
+  margin-bottom: 1rem;
+}
+
 
 .actions button, .actions .button {
   margin-right: 1rem;
@@ -111,11 +111,6 @@ form .user {
 
 .actions button:last-child, .action .button:last-child {
   margin-right: 0rem;
-}
-
-.actions .actions-info {
-  color: var(--text-color-muted);
-  font-size: var(--font-size-small);
 }
 
 .dialog {
@@ -128,5 +123,15 @@ form .user {
 }
 
 .info {
-  padding: 1rem 1rem 0rem 1rem;
+  padding: 0rem 1rem 0rem 2rem;
+  border-left: 1px solid var(--divider-color);
+  margin-bottom: 2.5rem;
+}
+
+.info p {
+  margin-bottom: 1rem;
+}
+
+.info h5 {
+  margin-bottom: 1rem;
 }

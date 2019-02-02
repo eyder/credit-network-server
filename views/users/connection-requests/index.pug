@@ -1,7 +1,7 @@
 extends ../../layout
 
 include ../../mixins/user-header.pug
-include ../../mixins/user.pug
+include ../../mixins/user-picture.pug
 include ../../mixins/debt.pug
 
 block content
@@ -13,30 +13,23 @@ block content
       a(href='./users/' + user.id + '/connection-requests').active Requests
 
   main
-    if receivedReqs.length + sentReqs.length > 0
-      table.u-full-width
-        thead
-          tr
-            th Requests waiting 
-            th.debt 
-        tbody
-
-          each receivedReq in receivedReqs
-            tr
-              td: +user(receivedReq.from)(href='./users/' + receivedReq.from.id)
-              td.actions
-                button.button-primary() ACCEPT
-                button() DECLINE
-                .actions-info Received #{moment(receivedReq.date).fromNow()}
-                
-
-          each sentReq in sentReqs
-            tr
-              td: +user(sentReq.to)(href='./users/' + sentReq.to.id)
-              td.actions 
-                button() CANCEL
-                .actions-info Sent #{moment(sentReq.date).fromNow()}
-
-    else
-      p You don't have any connection requests waiting.
+    each receivedReq in receivedReqs
+      .request
+        +user-picture(receivedReq.from)
+        div
+          p #[strong #{receivedReq.from.name}] sent you a connection request #{moment(receivedReq.date).fromNow()}.
+          .actions
+            button.button-primary() ACCEPT
+            button() DECLINE
+              
+    each sentReq in sentReqs
+      .request
+        +user-picture(sentReq.to)
+        div
+          p You sent a connection request to #[strong #{sentReq.to.name}] #{moment(sentReq.date).fromNow()}.
+          .actions 
+            button() CANCEL
+      
+    if receivedReqs.length + sentReqs.length === 0
+      p No connection requests waiting.
 
