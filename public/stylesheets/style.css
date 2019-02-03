@@ -28,7 +28,7 @@ button,.button {
 }
 
 .user-header {
-  padding: 2rem 0 2rem 0;
+  padding: 1rem 0 1rem 0;
   display: flex;
   justify-content: space-between;
 }
@@ -52,6 +52,10 @@ body > header > nav > a {
 body > header > nav > a.active {
   color: var(--text-color);
   border-bottom: 3px solid var(--link-color);
+}
+
+body > main {
+  padding: 1rem 0 1rem 0;
 }
 
 form .user {
@@ -115,7 +119,7 @@ form .user {
 
 .dialog {
   text-align: center;
-  padding: 1rem;
+  padding: 0 1rem 0 1rem;
 }
 
 .dialog .user {
