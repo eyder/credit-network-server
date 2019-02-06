@@ -95,26 +95,38 @@ form .user {
   font-size: var(--font-size-small);
 }
 
-.request {
+.user-card {
   margin-bottom: 1rem;
   display: flex;
 }
 
-.request .user-picture {
+.user-card .user-picture {
   margin-right: 1rem;
 }
 
-.request p {
+.user-card p {
   margin-bottom: 1rem;
 }
 
-
-.actions button, .actions .button {
+.actions > button, .actions > .button {
   margin-right: 1rem;
 }
 
-.actions button:last-child, .action .button:last-child {
+.actions > button:last-child, .action > .button:last-child {
   margin-right: 0rem;
+}
+
+.actions form button, .actions form .button {
+  margin-right: 1rem;
+}
+
+.actions form:last-child button, .actions form:last-child .button {
+  margin-right: 0rem;
+}
+
+.actions form {
+  display: inline-block;
+  margin: 0;
 }
 
 .dialog {

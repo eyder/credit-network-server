@@ -14,21 +14,37 @@ block content
 
   main
     each receivedReq in receivedReqs
-      .request
+      .user-card
         +user-picture(receivedReq.from)
         div
-          p #[strong #{receivedReq.from.name}] sent you a connection request #{moment(receivedReq.date).fromNow()}.
+          p #[strong #{receivedReq.from.name}] sent you a connection request #{moment(receivedReq.sent_at).fromNow()}.
           .actions
-            button.button-primary() ACCEPT
-            button() DECLINE
+            form(method='POST' action='./users/' + user.id + '/connection-requests/from/' + receivedReq.from.id + '/accept')
+              button.button-primary(type='submit') ACCEPT
+            form(method='POST' action='./users/' + user.id + '/connection-requests/from/' + receivedReq.from.id + '/decline')
+              button(type='submit') DECLINE
               
     each sentReq in sentReqs
-      .request
+      .user-card
         +user-picture(sentReq.to)
-        div
-          p You sent a connection request to #[strong #{sentReq.to.name}] #{moment(sentReq.date).fromNow()}.
-          .actions 
-            button() CANCEL
+        if sentReq.declined
+          div
+            p #[strong #{sentReq.to.name}] declined your connection request #{moment(sentReq.declined_at).fromNow()}.
+            .actions 
+              form(method='POST' action='./users/' + user.id + '/connection-requests/to/' + sentReq.to.id + '/delete')
+                button(type='submit') OK
+        else if sentReq.accepted
+          div
+            p #[strong #{sentReq.to.name}] accepted your connection request #{moment(sentReq.accepted_at).fromNow()}.
+            .actions 
+              form(method='POST' action='./users/' + user.id + '/connection-requests/to/' + sentReq.to.id + '/delete')
+                button(type='submit') OK
+        else
+          div
+            p You sent a connection request to #[strong #{sentReq.to.name}] #{moment(sentReq.sent_at).fromNow()}.
+            .actions 
+              form(method='POST' action='./users/' + user.id + '/connection-requests/to/' + sentReq.to.id + '/delete')
+                button(type='submit') CANCEL
       
     if receivedReqs.length + sentReqs.length === 0
       p No connection requests waiting.
