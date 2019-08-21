@@ -2,6 +2,7 @@ extends ../../layout
 
 include ../../mixins/user-header.pug
 include ../../mixins/user.pug
+include ../../mixins/user-picture.pug
 include ../../mixins/limit.pug
 include ../../mixins/debt.pug
 
@@ -15,19 +16,22 @@ block content
   
   main
     if connections.length > 0
-      table.u-full-width
-        thead
-          tr
-            th Connections  
-            th.limit Credit Limit 
-            th.debt 
-        tbody
-          each connection in connections
-            tr
-              td: +user(connection.to)(href='./users/' + connection.to.id)
-              td: +limit(connection.limit)
-              td: +debt(connection)
-      p: a.button(href='./users/' + user.id + '/connection-requests/find-person') CREATE CONNECTION
+      each connection in connections
+        .user-card
+          +user-picture(connection.to)
+          div
+            if connection.debt > 0
+              p you owe #[strong #{connection.to.name}]
+                span.credit-number #{connection.debt} credits
+            else if connection.debt < 0
+              p #[strong #{connection.to.name}] owes you
+                span.credit-number #{connection.debt} credits
+            else 
+              p There is no debt between you and #[strong #{connection.to.name}]
+          span.credit-number #{connection.debt}
+      .dialog
+        p You can always create more connections. Each new connection makes your network larger.
+        a.button(href='./users/' + user.id + '/connection-requests/find-person') FIND MORE FRIENDS
 
     else
       .dialog
