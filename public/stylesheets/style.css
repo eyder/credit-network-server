@@ -13,6 +13,10 @@ body {
   color: var(--text-color);
 }
 
+.container {
+  max-width: 400px;
+}
+
 a {
   text-decoration: none;
 }
@@ -104,6 +108,10 @@ form .user {
   margin-right: 1rem;
 }
 
+.user-card .credit-number {
+  margin-left: 1rem;
+}
+
 .user-card p {
   margin-bottom: 1rem;
 }
@@ -131,7 +139,7 @@ form .user {
 
 .dialog {
   text-align: center;
-  padding: 0 1rem 0 1rem;
+  padding: 1rem 1rem 0 1rem;
 }
 
 .dialog .user {
